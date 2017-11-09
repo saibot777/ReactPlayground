@@ -1,7 +1,7 @@
 export default () => {
     return [
         { title: 'Javascript: The Good Parts' },
-        { title: 'harry Potter' },
+        { title: 'Harry Potter' },
         { title: 'Dark Tower' },
         { title: 'Witcher' }
     ]

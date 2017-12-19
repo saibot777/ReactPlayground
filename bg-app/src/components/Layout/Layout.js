@@ -1,11 +1,13 @@
 import React from 'react';
 import Aux from '../../components/shared/Auxiliary';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 const layout = ( props ) => {
     return (
         <Aux>
-            <Toolbar />>
+            <Toolbar />
+            <SideDrawer />
             <main className="Content">
                 {props.children}
             </main>

@@ -1,13 +1,14 @@
 import React from 'react';
 
-import Aux from '../../../components/shared/Auxiliary';
+import classes from './Modal.css';
+import Aux from '../../shared/Auxiliary';
 import Backdrop from '../Backdrop/Backdrop';
 
 const modal = ( props ) => (
     <Aux>
         <Backdrop show={props.show} clicked={props.modalClosed} />
         <div
-            className="Modal"
+            className={classes.Modal}
             style={{
                 transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
                 opacity: props.show ? '1' : '0'
@@ -18,4 +19,3 @@ const modal = ( props ) => (
 );
 
 export default modal;
-    

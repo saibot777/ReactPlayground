@@ -4,6 +4,6 @@ export {
     initIngredients
 } from './burgerBuilder.action';
 
-// export {
-//   TODO
-// } from './order.action'
+export {
+  purchaseBurgerStart
+} from './order.action'

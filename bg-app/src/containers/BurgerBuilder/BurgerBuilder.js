@@ -12,10 +12,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import * as burgerActions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {...}
-    // }
     state = {
         purchasing: false
     }
@@ -39,6 +35,7 @@ class BurgerBuilder extends Component {
         if (this.props.isAuthenticated) {
             this.setState({purchasing: true});
         } else {
+            this.props.onSetRedirectPath('/checkout');
             this.props.history.push('/auth');
         }
     }
@@ -109,7 +106,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (ingName) => dispatch(burgerActions.addIngredient(ingName)),
         onIngredientRemoved: (ingName) => dispatch(burgerActions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(burgerActions.initIngredients()),
-        onInitPurchase: () => dispatch(burgerActions.purchaseInit())
+        onInitPurchase: () => dispatch(burgerActions.purchaseInit()),
+        onSetRedirectPath: (path) => dispatch(burgerActions.setAuthRedirectPath(path))
     }
 };
 

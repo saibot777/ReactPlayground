@@ -13,14 +13,20 @@ const receiveItems = (state, action) => {
     let newState = {
         ...state
     };
-
     newState.items = [].concat(newState.items);
-
     if (Array.isArray(action.payload)) {
         newState.items = newState.items.concat(action.payload);
     } else {
         newState.items.push(action.payload);
     }
+}
+
+const requestItems = (state, action) => {
+    let newState = {
+        ...state
+    };
+    newState.itemsError = action.payload;
+    return newState;
 }
 
 export const ui = handleAction(
@@ -34,6 +40,13 @@ export const ui = handleAction(
                 default:
                     return state;
             }
+        },
+        throw(state, action) {
+           switch (action.type) {
+               case RECEIVE_ADD_ITEM: return requestItems(state, action);
+               default:
+                    return state;
+           } 
         }
     }
 )

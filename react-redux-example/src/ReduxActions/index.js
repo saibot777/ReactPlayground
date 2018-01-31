@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+    requestAddItem
+} from '../modules/ui/actions';
 
 class ReduxActions extends Component {
 
     render () {
         return (
-            <div>Hello</div>
+            <div>
+                
+            </div>
         )
     }
 }
@@ -18,7 +25,9 @@ const mapStateToProps = (appState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        ...bindActionCreators({
+           requestAddItem
+        }, dispatch)
     }
 }
 

@@ -5,7 +5,11 @@ import {Link} from 'react-router-dom';
 const Footer = () => {
     return (
         <footer>
-            <h3>footer</h3>
+            <div className="flexbox-container">
+                <div className="logo">
+                    <span></span>
+                </div>
+            </div>
         </footer>
     )
 };

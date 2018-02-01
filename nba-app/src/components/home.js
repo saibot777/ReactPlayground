@@ -25,7 +25,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <Featured slide={this.state.home.slider}/>
+                <Featured slides={this.state.home.slider}/>
             </div>
         );
     }

@@ -7,9 +7,9 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import reducers from './reducers';
+import reducers from './store/reducers';
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>

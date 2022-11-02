@@ -13,6 +13,6 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "plugin:storybook/recommended"],
   rules: {},
 };

@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
@@ -23,8 +25,12 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["css-loader"],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
+  plugins: [
+    new webpack.ProgressPlugin(),
+    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+  ],
 };

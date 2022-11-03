@@ -3,13 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Top } from './components/Top';
+import { Scoreboard } from './components/Scoreboard';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Top feature='Flag' firstAction='ctrl' secondAction='click'>Minesweeper</Top>
+    <>
+      <Top feature="Flag" firstAction="ctrl" secondAction="click">
+        Minesweeper
+      </Top>
+      <Scoreboard
+        time="000"
+        levels={['beginner', 'intermediate', 'expert']}
+        mines="010"
+        onReset={() => null}
+    />
+  </>,
+  document.getElementById('root')
   </React.StrictMode>
 );
 

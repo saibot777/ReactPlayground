@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import styled from '@emotion/styled';
-import { Cell as CellType } from '@/helpers/Field';
+import { Cell as CellType, CellState } from '@/helpers/Field';
 export interface CellProps {
     children: CellType;
 }
 export const Cell: FC<CellProps> = ({ children }) => {
     switch(children) {
-        case 0:
+        case CellState.empty:
             return <EmptyFrame />
-        case 10:
+        case CellState.hidden:
             return <ClosedFrame />
         default:
             return <ClosedFrame />;

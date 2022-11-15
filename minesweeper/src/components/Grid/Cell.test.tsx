@@ -10,19 +10,19 @@ describe('Cell component check', () => {
 
   for (let cell = CellState.empty; cell <= CellState.weakFlag; cell++) {
     it('Cell renders correctly', () => {
-        const props = {
-          coords,
-          onClick: jest.fn(),
-          onContextMenu: jest.fn(),
-        };
-  
-        const { asFragment } = render(<Cell {...props}>{cell}</Cell>);
-  
-        expect(asFragment()).toMatchSnapshot();
+      const props = {
+        coords,
+        onClick: jest.fn(),
+        onContextMenu: jest.fn(),
+      };
+
+      const { asFragment } = render(<Cell {...props}>{cell}</Cell>);
+
+      expect(asFragment()).toMatchSnapshot();
     });
     it('Closed Frame renders correctly', () => {
-        const { asFragment } = render(<ClosedFrame mouseDown={true} />);
-        expect(asFragment()).toMatchSnapshot();
+      const { asFragment } = render(<ClosedFrame mouseDown={true} />);
+      expect(asFragment()).toMatchSnapshot();
     });
     it('Check prevent default contextMenu for every type of cell', () => {
       const props = {
@@ -33,7 +33,7 @@ describe('Cell component check', () => {
 
       render(<Cell {...props}>{cell}</Cell>);
 
-      const cellComp = screen.getByTestId(`${cell}_${coords}`);
+      const cellComp = screen.getByTestId(`${coords}`);
 
       const contextMenuEvent = createEvent.contextMenu(cellComp);
       fireEvent(cellComp, contextMenuEvent);
@@ -50,7 +50,7 @@ describe('Cell component check', () => {
 
       render(<Cell {...props}>{cell}</Cell>);
 
-      const cellComp = screen.getByTestId(`${cell}_${coords}`);
+      const cellComp = screen.getByTestId(`${coords}`);
 
       fireEvent.click(cellComp);
       fireEvent.contextMenu(cellComp);

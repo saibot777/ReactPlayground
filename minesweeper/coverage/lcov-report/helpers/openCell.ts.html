@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -108,7 +108,11 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,51 +127,54 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">251x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">133x</span>
-<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">251x</span>
+<span class="cline-any cline-yes">251x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">251x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">131x</span>
-<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">249x</span>
+<span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">66x</span>
-<span class="cline-any cline-yes">528x</span>
-<span class="cline-any cline-yes">400x</span>
-<span class="cline-any cline-yes">400x</span>
+<span class="cline-any cline-yes">116x</span>
+<span class="cline-any cline-yes">928x</span>
+<span class="cline-any cline-yes">718x</span>
+<span class="cline-any cline-yes">718x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">400x</span>
-<span class="cline-any cline-yes">119x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">718x</span>
+<span class="cline-any cline-yes">165x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">131x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">249x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">249x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">249x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { CellState, Coords, Field } from "./Field";
 import { checkItemInField, getNeigboursItems } from "./CellsManipulator";
+import { detectSolvedPuzzle } from "./detectSolvedPuzzle";
 &nbsp;
 /**
  * Open cell in the player field using game field info
  * @param {Coords} coords
  * @param {Field} playerField
  * @param {Field} gameField
- * @returns {Field}
+ * @returns {[Field, boolean, number]}
  */
 export const openCell = (
   coords: Coords,
   playerField: Field,
   gameField: Field
-): Field =&gt; {
+): [Field, boolean, number] =&gt; {
   const { empty, hidden, bomb } = CellState;
 &nbsp;
   const [y, x] = coords;
@@ -188,7 +195,7 @@ export const openCell = (
         const gameCell = gameField[y][x];
 &nbsp;
         if (playerCell === hidden &amp;&amp; gameCell !== bomb) {
-          playerField = openCell([y, x], playerField, gameField);
+          [playerField] = openCell([y, x], playerField, gameField);
         }
       }
     }
@@ -196,7 +203,9 @@ export const openCell = (
 &nbsp;
   playerField[y][x] = gameCell;
 &nbsp;
-  return playerField;
+  const [isSolved, flagCounter] = detectSolvedPuzzle(playerField, gameField);
+&nbsp;
+  return [playerField, isSolved, flagCounter];
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -205,7 +214,7 @@ export const openCell = (
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-19T22:13:36.316Z
+                at 2022-11-19T22:35:25.238Z
             </div>
         <script src="../prettify.js"></script>
         <script>

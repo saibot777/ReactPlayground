@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Top } from './components/Top';
 import { Scoreboard } from './components/Scoreboard';
+import { GameWithHooks } from './modules/GameWithHooks';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,15 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <>
-      <Top feature="Flag" firstAction="ctrl" secondAction="click">
-        Minesweeper
-      </Top>
-      <Scoreboard
-        time="000"
-        levels={['beginner', 'intermediate', 'expert']}
-        mines="010"
-        onReset={() => null}
-    />
+    <GameWithHooks/>
   </>,
   document.getElementById('root')
   </React.StrictMode>

@@ -1,18 +1,24 @@
-import React, { FC } from "react";
+import React, { FC, memo } from 'react';
 import styled from '@emotion/styled';
-import { GameName, GameNameProps } from "./GameName";
-import { Legend, LegendProps } from "./Legend";
 
-export type TopComponentType =  LegendProps & GameNameProps;
+import { Legend, LegendProps } from './Legend';
+import { GameName, GameNameProps } from './GameName';
 
-export const Top: FC<TopComponentType> = ({ children, ...legendProps }) => (
+export type TopComponentType = LegendProps & GameNameProps;
+
+export const Top: FC<TopComponentType> = memo(
+  ({ children, ...legendProps }) => (
     <Header>
-        <GameName>{children}</GameName>
-        <Legend {...legendProps}/>
+      <GameName>{children}</GameName>
+      <Legend {...legendProps} />
     </Header>
-)
+  )
+);
+
+Top.displayName = 'Top';
+
 const Header = styled.header`
-    text-align: center;
-    position: relative;
-    display: inline-block;
-`
+  text-align: center;
+  position: relative;
+  display: inline-block;
+`;

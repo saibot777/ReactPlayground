@@ -197,7 +197,13 @@
 <a name='L132'></a><a href='#L132'>132</a>
 <a name='L133'></a><a href='#L133'>133</a>
 <a name='L134'></a><a href='#L134'>134</a>
-<a name='L135'></a><a href='#L135'>135</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -261,6 +267,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">231x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">152x</span>
 <span class="cline-any cline-yes">152x</span>
 <span class="cline-any cline-yes">152x</span>
@@ -278,7 +285,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">231x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -292,6 +302,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">231x</span>
@@ -331,7 +343,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useCallback } from "react";
 &nbsp;
 import {
   Field,
@@ -394,39 +406,45 @@ export const useGame = (): ReturnType =&gt; {
     fieldGenerator(size, bombs / (size * size))
   );
 &nbsp;
-  const onClick = (coords: Coords) =&gt; {
-    !isGameStarted &amp;&amp; setInProgress();
-    try {
-      const [newPlayerField, isSolved] = openCell(
+  const onClick = useCallback(
+    (coords: Coords) =&gt; {
+      !isGameStarted &amp;&amp; setInProgress();
+      try {
+        const [newPlayerField, isSolved] = openCell(
+          coords,
+          playerField,
+          gameField
+        );
+        if (isSolved) {
+          setGameWin();
+        }
+        setPlayerField([...newPlayerField]);
+      } catch (e) {
+        setPlayerField([...gameField]);
+        setGameLoose();
+      }
+    },
+    [isGameStarted, isGameOver, isWin, level, flagCounter]
+  );
+&nbsp;
+  const onContextMenu = useCallback(
+    (coords: Coords) =&gt; {
+      !isGameStarted &amp;&amp; setInProgress();
+      const [newPlayerField, isSolved, newFlagCounter] = setFlag(
         coords,
         playerField,
-        gameField
+        gameField,
+        flagCounter,
+        bombs
       );
+      setFlagCounter(newFlagCounter);
       if (isSolved) {
         setGameWin();
       }
       setPlayerField([...newPlayerField]);
-    } catch (e) {
-      setPlayerField([...gameField]);
-      setGameLoose();
-    }
-  };
-&nbsp;
-  const onContextMenu = (coords: Coords) =&gt; {
-    !isGameStarted &amp;&amp; setInProgress();
-    const [newPlayerField, isSolved, newFlagCounter] = setFlag(
-      coords,
-      playerField,
-      gameField,
-      flagCounter,
-      bombs
-    );
-    setFlagCounter(newFlagCounter);
-    if (isSolved) {
-      setGameWin();
-    }
-    setPlayerField([...newPlayerField]);
-  };
+    },
+    [isGameStarted, isGameOver, isWin, level, flagCounter]
+  );
 &nbsp;
   const resetHandler = ([size, bombs]: [number, number]) =&gt; {
     const newGameField = fieldGenerator(size, bombs / (size * size));
@@ -442,12 +460,12 @@ export const useGame = (): ReturnType =&gt; {
     setFlagCounter(0);
   };
 &nbsp;
-  const onChangeLevel = (level: LevelNames) =&gt; {
+  const onChangeLevel = useCallback((level: LevelNames) =&gt; {
     const newSettings = setLevel(level);
     resetHandler(newSettings);
-  };
+  }, []);
 &nbsp;
-  const onReset = () =&gt; resetHandler([size, bombs]);
+  const onReset = useCallback(() =&gt; resetHandler([size, bombs]), [size, bombs]);
 &nbsp;
   return {
     level,
@@ -472,7 +490,7 @@ export const useGame = (): ReturnType =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-19T23:13:05.103Z
+                at 2022-11-19T23:25:38.270Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

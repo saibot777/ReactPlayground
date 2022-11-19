@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   Field,
   CellState,
@@ -16,6 +17,7 @@ interface ReturnType {
   isWin: boolean;
   settings: [number, number];
   playerField: Field;
+  gameField: Field;
   onClick: (coords: Coords) => void;
   onChangeLevel: (level: LevelNames) => void;
   onReset: () => void;
@@ -24,8 +26,8 @@ interface ReturnType {
 export const useGame = (): ReturnType => {
   const [level, setLevel] = useState<LevelNames>("beginner");
 
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
-  const [isWin, setIsWin] = useState<boolean>(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [isWin, setIsWin] = useState(false);
 
   const [size, bombs] = GameSettings[level];
 
@@ -67,12 +69,14 @@ export const useGame = (): ReturnType => {
   };
 
   const onReset = () => resetHandler([size, bombs]);
+
   return {
     level,
     isGameOver,
     isWin,
     settings: [size, bombs],
     playerField,
+    gameField,
     onClick,
     onChangeLevel,
     onReset,

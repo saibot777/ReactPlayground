@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/Scoreboard/Level.tsx</title>
+    <title>Code coverage report for modules/GameWithHooks/useStatus.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Scoreboard</a> Level.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">modules/GameWithHooks</a> useStatus.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -106,7 +106,14 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,75 +131,89 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">244x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-yes">244x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-yes">196x</span>
+<span class="cline-any cline-yes">196x</span>
+<span class="cline-any cline-yes">196x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">244x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { FC, ChangeEvent } from 'react';
-import styled from '@emotion/styled';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from "react";
 &nbsp;
-export interface LevelProps {
-  /**
-   * Array of possible game levels
-   */
-  children: string[];
-  /**
-   * Default value
-   */
-  value?: string;
-  /**
-   * Select new lvl handler
-   */
-  onChange: (event: ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; void;
+export interface Return {
+  isGameOver: boolean;
+  isGameStarted: boolean;
+  isWin: boolean;
+  setGameWin: () =&gt; void;
+  setGameLoose: () =&gt; void;
+  setInProgress: () =&gt; void;
+  setNewGame: () =&gt; void;
 }
 &nbsp;
-export const Level: FC&lt;LevelProps&gt; = ({ children, value, onChange }) =&gt; (
-  &lt;Select onChange={onChange} value={value}&gt;
-    {children.map((item: string) =&gt; (
-      &lt;Option key={item} value={item}&gt;
-        {item}
-      &lt;/Option&gt;
-    ))}
-  &lt;/Select&gt;
-);
+export enum GameStatuses {
+  NewGame,
+  InProgress,
+  Win,
+  Loose,
+}
 &nbsp;
-const Select = styled.select`
-  margin: 0;
-  height: 100%;
-  border-radius: 0;
-  border: 0.15vw solid;
-  border-color: white #9e9e9e #9e9e9e white;
-  background-color: #d1d1d1;
-`;
+export const useStatus = (): Return =&gt; {
+  const { NewGame, InProgress, Win, Loose } = GameStatuses;
 &nbsp;
-const Option = styled.option`
-  font-weight: normal;
-  display: block;
-  white-space: nowrap;
-  min-height: 1.2em;
-  padding: 0 0.2vw 0.2vw;
-`;</pre></td></tr></table></pre>
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [isWin, setIsWin] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+&nbsp;
+  const setGameStatus = (status: GameStatuses) =&gt; {
+    setIsGameStarted(status === InProgress);
+    setIsWin(status === Win);
+    setIsGameOver([Win, Loose].includes(status));
+  };
+&nbsp;
+  const setNewGame = () =&gt; setGameStatus(NewGame);
+&nbsp;
+  const setInProgress = () =&gt; setGameStatus(InProgress);
+&nbsp;
+  const setGameWin = () =&gt; setGameStatus(Win);
+&nbsp;
+  const setGameLoose = () =&gt; setGameStatus(Loose);
+&nbsp;
+  return {
+    isGameStarted,
+    isWin,
+    isGameOver,
+    setNewGame,
+    setInProgress,
+    setGameWin,
+    setGameLoose,
+  };
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

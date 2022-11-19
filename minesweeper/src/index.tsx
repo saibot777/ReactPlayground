@@ -13,8 +13,7 @@ root.render(
   <React.StrictMode>
     <>
     <GameWithHooks/>
-  </>,
-  document.getElementById('root')
+  </>
   </React.StrictMode>
 );
 

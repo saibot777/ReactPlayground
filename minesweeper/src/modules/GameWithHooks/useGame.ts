@@ -32,14 +32,12 @@ interface ReturnType {
   onReset: () => void;
 }
 
-export const useGame = (
-  defaultLevel = "beginner" as LevelNames
-): ReturnType => {
+export const useGame = (): ReturnType => {
   const {
     settings: [size, bombs],
     level,
     setLevel,
-  } = useSettings(defaultLevel);
+  } = useSettings();
 
   const {
     isGameStarted,

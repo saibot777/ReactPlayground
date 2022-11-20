@@ -32,12 +32,14 @@ interface ReturnType {
   onReset: () => void;
 }
 
-export const useGame = (): ReturnType => {
+export const useGame = (
+  defaultLevel = "beginner" as LevelNames
+): ReturnType => {
   const {
     settings: [size, bombs],
     level,
     setLevel,
-  } = useSettings();
+  } = useSettings(defaultLevel);
 
   const {
     isGameStarted,
@@ -79,7 +81,15 @@ export const useGame = (): ReturnType => {
         setGameLoose();
       }
     },
-    [isGameStarted, isGameOver, isWin, level, flagCounter]
+    [
+      isGameStarted,
+      isGameOver,
+      isWin,
+      level,
+      flagCounter,
+      playerField,
+      gameField,
+    ]
   );
 
   const onContextMenu = useCallback(
@@ -98,7 +108,15 @@ export const useGame = (): ReturnType => {
       }
       setPlayerField([...newPlayerField]);
     },
-    [isGameStarted, isGameOver, isWin, level, flagCounter]
+    [
+      isGameStarted,
+      isGameOver,
+      isWin,
+      level,
+      flagCounter,
+      playerField,
+      gameField,
+    ]
   );
 
   const resetHandler = ([size, bombs]: [number, number]) => {
@@ -118,9 +136,14 @@ export const useGame = (): ReturnType => {
   const onChangeLevel = useCallback((level: LevelNames) => {
     const newSettings = setLevel(level);
     resetHandler(newSettings);
+    // Stryker disable next-line ArrayDeclaration
   }, []);
 
-  const onReset = useCallback(() => resetHandler([size, bombs]), [size, bombs]);
+  const onReset = useCallback(
+    () => resetHandler([size, bombs]),
+    // Stryker disable next-line ArrayDeclaration
+    [size, bombs]
+  );
 
   return {
     level,

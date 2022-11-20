@@ -1,6 +1,6 @@
 import { CellState, Coords, Field } from "./Field";
 import { checkItemInField, getNeigboursItems } from "./CellsManipulator";
-import { detectSolvedPuzzle } from "./detectSolvedPullze";
+import { detectSolvedPuzzle } from "./detectSolvedPuzzle";
 import { copyField } from "./copyField";
 
 /**

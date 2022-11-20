@@ -26,13 +26,13 @@ const MinesweeperWithHooks = React.lazy(() =>
 //   )
 // );
 
-// const MinesweeperWithReactRedux = React.lazy(() =>
-//   import('@/pages/MinesweeperWithReactRedux').then(
-//     ({ MinesweeperWithReactRedux }) => ({
-//       default: MinesweeperWithReactRedux,
-//     })
-//   )
-// );
+const MinesweeperWithRedux = React.lazy(() =>
+  import('@/pages/MinesweeperWithRedux').then(
+    ({ MinesweeperWithRedux }) => ({
+      default: MinesweeperWithRedux,
+    })
+  )
+);
 
 export const Navigation: FC = () => {
   const [searchParams] = useSearchParams();
@@ -115,7 +115,7 @@ export const Routing: FC = () => (
           <Suspense
             fallback={<div>Loading minesweeper with ReactRedux...</div>}
           >
-            <MinesweeperWithHooks />
+            <MinesweeperWithRedux />
           </Suspense>
         }
       />

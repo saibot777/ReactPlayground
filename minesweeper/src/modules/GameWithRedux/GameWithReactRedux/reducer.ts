@@ -1,14 +1,15 @@
-import { AnyAction, Reducer } from "redux";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import {
   Field,
   CellState,
   generateFieldWithDefaultState,
   fieldGenerator,
+  Coords,
 } from "@/core/Field";
 import { LevelNames, GameSettings } from "@/modules/GameSettings";
 import { openCell as openCellHandler } from "@/core/openCell";
-import { OPEN_CELL } from "./actions";
+import { setFlag } from "@/core/setFlag";
 
 export interface State {
   level: LevelNames;
@@ -23,8 +24,7 @@ export interface State {
   flagCounter: number;
 }
 
-export const getInitialState = (): State => {
-  const level = "beginner";
+export const getInitialState = (level = "beginner" as LevelNames): State => {
   const settings = GameSettings[level];
   const [size, bombs] = settings;
 
@@ -42,43 +42,47 @@ export const getInitialState = (): State => {
   };
 };
 
-export const reducer: Reducer<State> = (
-  state = getInitialState(),
-  action: AnyAction
-) => {
-  const { playerField, gameField } = state;
-
-  switch (action.type) {
-    case OPEN_CELL: {
-      const {
-        payload: { coords },
-      } = action;
-
+export const { reducer, actions } = createSlice({
+  name: "game",
+  initialState: getInitialState(),
+  reducers: {
+    openCell: (state, { payload }: PayloadAction<Coords>) => {
+      const { playerField, gameField } = state;
       try {
         const [newPlayerField, isSolved] = openCellHandler(
-          coords,
+          payload,
           playerField,
           gameField
         );
-
-        return {
-          ...state,
-          isGameStarted: true,
-          isGameOver: isSolved,
-          isWin: isSolved,
-          playerField: newPlayerField,
-        };
+        state.isGameStarted = !isSolved;
+        state.isGameOver = isSolved;
+        state.isWin = isSolved;
+        state.playerField = newPlayerField;
       } catch (error) {
-        return {
-          ...state,
-          isGameStarted: false,
-          isGameOver: true,
-          isWin: false,
-          playerField: gameField,
-        };
+        state.isGameStarted = false;
+        state.isGameOver = true;
+        state.isWin = false;
+        state.playerField = gameField;
       }
-    }
-    default:
-      return state;
-  }
-};
+    },
+    setFlag: (state, { payload }: PayloadAction<Coords>) => {
+      const { playerField, gameField, flagCounter, bombs } = state;
+
+      const [newPlayerField, isSolved, newFlagCounter] = setFlag(
+        payload,
+        playerField,
+        gameField,
+        flagCounter,
+        bombs
+      );
+      state.isGameStarted = !isSolved;
+      state.isGameOver = isSolved;
+      state.isWin = isSolved;
+      state.flagCounter = newFlagCounter;
+      state.playerField = newPlayerField;
+    },
+    reset: ({ level }) => getInitialState(level),
+    changeLevel: (state, { payload }: PayloadAction<LevelNames>) =>
+      getInitialState(payload),
+  },
+});

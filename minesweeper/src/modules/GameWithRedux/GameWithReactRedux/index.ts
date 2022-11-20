@@ -1,1 +1,1 @@
-export { GameWithRedux } from "./GameWithRedux";
+export { GameWithReactRedux } from './GameWithReactRedux';

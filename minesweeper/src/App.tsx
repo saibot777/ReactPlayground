@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from 'react';
 import { Location } from 'history';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import {
   BrowserRouter,
   Routes,
@@ -10,7 +10,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 
-// import { store } from '@/store';
+import { store } from '@/store';
 
 const MinesweeperWithHooks = React.lazy(() =>
   import('@/pages/MinesweeperWithHooks').then(({ MinesweeperWithHooks }) => ({
@@ -18,18 +18,18 @@ const MinesweeperWithHooks = React.lazy(() =>
   }))
 );
 
-// const MinesweeperWithUseReducer = React.lazy(() =>
-//   import('@/pages/MinesweeperWithUseReducer').then(
-//     ({ MinesweeperWithUseReducer }) => ({
-//       default: MinesweeperWithUseReducer,
-//     })
-//   )
-// );
+const MinesweeperWithUseReducer = React.lazy(() =>
+  import('@/pages/MinesweeperWithUseReducer').then(
+    ({ MinesweeperWithUseReducer }) => ({
+      default: MinesweeperWithUseReducer,
+    })
+  )
+);
 
-const MinesweeperWithRedux = React.lazy(() =>
-  import('@/pages/MinesweeperWithRedux').then(
-    ({ MinesweeperWithRedux }) => ({
-      default: MinesweeperWithRedux,
+const MinesweeperWithReactRedux = React.lazy(() =>
+  import('@/pages/MinesweeperWithReactRedux').then(
+    ({ MinesweeperWithReactRedux }) => ({
+      default: MinesweeperWithReactRedux,
     })
   )
 );
@@ -105,7 +105,7 @@ export const Routing: FC = () => (
           <Suspense
             fallback={<div>Loading minesweeper with useReducer...</div>}
           >
-            <MinesweeperWithHooks />
+            <MinesweeperWithUseReducer />
           </Suspense>
         }
       />
@@ -115,7 +115,7 @@ export const Routing: FC = () => (
           <Suspense
             fallback={<div>Loading minesweeper with ReactRedux...</div>}
           >
-            <MinesweeperWithRedux />
+            <MinesweeperWithReactRedux />
           </Suspense>
         }
       />
@@ -125,10 +125,10 @@ export const Routing: FC = () => (
 );
 
 export const App: FC = () => (
-//   <Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <Navigation />
       <Routing />
     </BrowserRouter>
-//   </Provider>
+  </Provider>
 );
